@@ -49,11 +49,9 @@ fn main() {
         handle_supports(sub_args);
     } else if let Some(sub_args) = matches.subcommand_matches("install") {
         handle_install(sub_args);
-    } else {
-        if let Err(e) = handle_preprocessing() {
-            eprintln!("{}", e);
-            process::exit(1);
-        }
+    } else if let Err(e) = handle_preprocessing() {
+        eprintln!("{}", e);
+        process::exit(1);
     }
 }
 
@@ -225,7 +223,7 @@ fn add_preprocessor(doc: &mut Document) {
         .as_table_mut()
         .unwrap()
         .entry("mermaid")
-        .or_insert(empty_table.clone());
+        .or_insert(empty_table);
     item["command"] = value("mdbook-mermaid");
 }
 
@@ -249,7 +247,7 @@ fn insert_additional(doc: &mut Document, additional_type: &str, file: &str) {
         .as_table_mut()
         .unwrap()
         .entry("html")
-        .or_insert(empty_table.clone());
+        .or_insert(empty_table);
     let array = item
         .as_table_mut()
         .unwrap()

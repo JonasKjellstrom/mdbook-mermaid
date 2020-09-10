@@ -98,8 +98,7 @@ fn add_mermaid(content: &str) -> Result<String> {
     opts.newlines_after_codeblock = 1;
     cmark_with_options(events, &mut buf, None, opts)
         .map(|_| buf)
-        //.map_err(|err| Error::from(format!("Markdown serialization failed: {}", err)))
-        .map_err(|err| Error::from(err))
+        .map_err(Error::from)
 }
 
 impl Mermaid {
